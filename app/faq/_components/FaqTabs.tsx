@@ -1,3 +1,5 @@
+"use client"
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { FaqSidebar } from "./FaqSidebar"
 import { FaqContent } from "./FaqContent"

@@ -118,48 +118,52 @@ export function NavigationTabs({
   };
 
   return (
-    <div className={`${containerClasses[variant]} ${className} relative`}>
-      {/* Botões de navegação para rolagem horizontal */}
-      {variant === "modern" && (
-        <>
-          <AnimatePresence>
-            {canScrollLeft && (
-              <motion.button
-                initial={{ opacity: 0, x: 10 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 10 }}
-                className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-full p-1 shadow-md border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-primary/10 hover:text-primary transition-all duration-200"
-                onClick={scrollLeft}
-                aria-label="Rolar para a esquerda"
-              >
-                <ChevronLeft className="h-4 w-4" />
-              </motion.button>
-            )}
-          </AnimatePresence>
-          
-          <AnimatePresence>
-            {canScrollRight && (
-              <motion.button
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -10 }}
-                className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-full p-1 shadow-md border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-primary/10 hover:text-primary transition-all duration-200"
-                onClick={scrollRight}
-                aria-label="Rolar para a direita"
-              >
-                <ChevronRight className="h-4 w-4" />
-              </motion.button>
-            )}
-          </AnimatePresence>
-        </>
-      )}
-      
-      <div 
-        className={`flex overflow-x-auto scrollbar-hide ${variant === "modern" ? "px-1 py-1 snap-x" : ""}`}
-        ref={scrollContainerRef}
-        onScroll={checkScrollability}
-      >
-        <TabsList className={`${tabsListClasses[variant]} w-full`}>
+    <Tabs value={activeTab} onValueChange={(value) => {
+      setActiveTab(value);
+      if (onChange) onChange(value);
+    }}>
+      <div className={`${containerClasses[variant]} ${className} relative`}>
+        {/* Botões de navegação para rolagem horizontal */}
+        {variant === "modern" && (
+          <>
+            <AnimatePresence>
+              {canScrollLeft && (
+                <motion.button
+                  initial={{ opacity: 0, x: 10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 10 }}
+                  className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-full p-1 shadow-md border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-primary/10 hover:text-primary transition-all duration-200"
+                  onClick={scrollLeft}
+                  aria-label="Rolar para a esquerda"
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                </motion.button>
+              )}
+            </AnimatePresence>
+
+            <AnimatePresence>
+              {canScrollRight && (
+                <motion.button
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -10 }}
+                  className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-full p-1 shadow-md border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-primary/10 hover:text-primary transition-all duration-200"
+                  onClick={scrollRight}
+                  aria-label="Rolar para a direita"
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </motion.button>
+              )}
+            </AnimatePresence>
+          </>
+        )}
+
+        <div
+          className={`flex overflow-x-auto scrollbar-hide ${variant === "modern" ? "px-1 py-1 snap-x" : ""}`}
+          ref={scrollContainerRef}
+          onScroll={checkScrollability}
+        >
+          <TabsList className={`${tabsListClasses[variant]} w-full`}>
           {tabs.map((tab) => {
             const Icon = tab.icon;
             const isActive = tab.id === activeTab;
@@ -302,5 +306,6 @@ export function NavigationTabs({
         </TabsList>
       </div>
     </div>
+    </Tabs>
   );
 } 
